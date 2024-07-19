@@ -1,3 +1,37 @@
+/*#region*/
+/*#endregion*/
+
+:root{
+    /* Colours */
+    --dark-square-color: black;
+    --light-square-color: white;
+
+    /*Generic Positions*/
+    --offset: 100px;
+
+    /* Board Positions */
+    --piece-row-1: 50px;
+    --piece-row-2: 150px;
+
+    --piece-col-1: 50px;
+    --piece-col-2: 150px;
+
+    /*Piece positions*/
+    --piece-x-offset: 32.5px;
+    --piece-y-offset: 32.5px;
+}
+
+/*Colours*/
+.lightSquare {
+    background-color: var(--light-square-color);
+}
+
+.darkSquare {
+    background-color: var(--dark-square-color);
+}
+
+/* Board Rendering*/
+/*#region*/
 .boardContainer {
     position: relative;
     width: 800px;
@@ -27,6 +61,29 @@
     flex-flow: row-reverse;
     width: 100px;
     height: 100px;
+}
+/*#endregion*/
+
+/*CoordinateLabels*/
+/*#region*/
+.coordinateLabelTextDark {
+    align-self: center;
+    margin: auto;
+    font-size: 1.5em;
+    font-family: sans-serif;
+    font-weight: bold;
+
+    color:black;
+}
+
+.coordinateLabelTextLight {
+    align-self: center;
+    margin: auto;
+    font-size: 1.5em;
+    font-family: sans-serif;
+    font-weight: bold;
+
+    color:white;
 }
 
 .coordinateLabel {
@@ -115,30 +172,106 @@
     left: -3px;
     bottom: 765px;
 }
+/*#endregion*/
 
-.coordinateLabelTextDark {
+
+/*Piece Rendering*/
+/*#region*/
+.pieceContainer{
+    position: relative;
+    width: 800px;
+    height: 800px;
+}
+
+.piece {
+    width: 35px;
+    height: 35px;
+    display: flex;
+    position: absolute;
+}
+.pieceText{
     align-self: center;
     margin: auto;
     font-size: 1.5em;
     font-family: sans-serif;
     font-weight: bold;
 
-    color:black;
+    color: red;
 }
 
-.coordinateLabelTextLight {
-    align-self: center;
-    margin: auto;
-    font-size: 1.5em;
-    font-family: sans-serif;
-    font-weight: bold;
-
-    color:white;
+.pieceCol1 {
+    left: calc(var(--piece-x-offset))
 }
+
+.pieceCol2 {
+    left: calc(var(--piece-x-offset) + var(--offset)*1)
+}
+
+.pieceCol3 {
+    left: calc(var(--piece-x-offset) + var(--offset)*2)
+}
+
+.pieceCol4 {
+    left: calc(var(--piece-x-offset) + var(--offset)*3)
+}
+
+.pieceCol5 {
+    left: calc(var(--piece-x-offset) + var(--offset)*4)
+}
+
+.pieceCol6 {
+    left: calc(var(--piece-x-offset) + var(--offset)*5)
+}
+
+.pieceCol7 {
+    left: calc(var(--piece-x-offset) + var(--offset)*6)
+}
+
+.pieceCol8 {
+    left: calc(var(--piece-x-offset) + var(--offset)*7)
+}
+
+.pieceRow1 {
+    bottom: var(--piece-y-offset)
+}
+
+.pieceRow2 {
+    bottom: calc(var(--piece-y-offset) + var(--offset)*1)
+}
+
+.pieceRow3 {
+    bottom: calc(var(--piece-y-offset) + var(--offset)*2)
+}
+
+.pieceRow4 {
+    bottom: calc(var(--piece-y-offset) + var(--offset)*3)
+}
+
+.pieceRow5 {
+    bottom: calc(var(--piece-y-offset) + var(--offset)*4)
+}
+
+.pieceRow6 {
+    bottom: calc(var(--piece-y-offset) + var(--offset)*5)
+}
+
+.pieceRow7 {
+    bottom: calc(var(--piece-y-offset) + var(--offset)*6)
+}
+
+.pieceRow8 {
+    bottom: calc(var(--piece-y-offset) + var(--offset)*7)
+}
+
+/*#endregion*/
+
 
 .redBG {
     background-color: red;
 }
+
+/*Junk???
+
 
 .columnNotationDiv {
     width: 35px;
@@ -165,19 +298,6 @@
     font-family: sans-serif;
     font-weight: bold;
 }
-
-.lightSquare {
-    background-color: white;
-}
-
-.darkSquare {
-    background-color: black;
-}
-
-
-
-
-
 
 .columnNotationA {
     justify-content: flex-start;
@@ -209,4 +329,4 @@
 
 .columnNotationH {
     justify-content: flex-end;
-}
+} */

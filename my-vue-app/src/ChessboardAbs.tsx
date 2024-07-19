@@ -6,7 +6,16 @@ export default function ChessboardAbs() {
 
   const [perspective, setPerspective] = useState("white");
 
-  // const [boardState, setBoardState = useState();
+  const [gameState, setGameState] = useState(
+    [ ["bR","bN","bB","bQ","bK","bB","bN","bR"],
+      ["bP","bP","bP","bP","bP","bP","bP","bP"],
+      ["x","x","x","x","x","x","x","x"],
+      ["x","x","x","x","x","x","x","x"],
+      ["x","x","x","x","x","x","x","x"],
+      ["x","x","x","x","x","x","x","x"],
+      ["wP","wP","wP","wP","wP","wP","wP","wP"],
+      ["wR","wN","wB","wQ","wK","wB","wN","wR"] ]
+  );
 
   const togglePerspective = () => {
     if (perspective == "white") {
@@ -27,7 +36,7 @@ export default function ChessboardAbs() {
 
         <BoardCoordinates perspective = {perspective} />
 
-        {/* Show pieces */}
+        <DisplayPieces gameState = {gameState}></DisplayPieces>
       </div>
     </>
   )
@@ -324,3 +333,50 @@ function BoardCoordinates({perspective} : perspectiveProps) {
     )
   }
 }
+
+interface gameStateProps {
+  gameState: string[][];
+}
+
+function DisplayPieces({gameState} : gameStateProps) {
+  
+  // return(
+  //   <>
+  //   <Div></>
+  //   </>
+  // )
+  
+  const rowClasses = ["pieceRow1","pieceRow2","pieceRow3","pieceRow4","pieceRow5","pieceRow6","pieceRow7","pieceRow8"];
+  const colClasses = ["pieceCol1","pieceCol2","pieceCol3","pieceCol4","pieceCol5","pieceCol6","pieceCol7","pieceCol8"];
+  let pieceClassname = "";
+  // const colClass = "";
+  // const rowClass = "";
+  //Testing function that displays pieces in a list
+  return (
+    <>
+      {gameState.map((items, index) => {
+        return (
+          <>
+            {items.map((subItems, sindex) => {
+              pieceClassname = "piece" + " " + rowClasses[index] + " " + colClasses[sindex];
+              if (gameState[index][sindex] != "x") {
+                return (
+                  <div className={pieceClassname}>
+                    <p className="pieceText">{gameState[index][sindex]}</p>
+                  </div>
+                )
+              } else {
+                return(
+                  <></>
+                )
+              }
+
+            })}
+          </>
+        );
+      })}
+    </>
+  );
+}
+
+// DisplaySinglePiece({column, row})
