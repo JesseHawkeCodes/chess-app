@@ -7,22 +7,24 @@ export default function ChessboardAbs() {
   const [perspective, setPerspective] = useState("white");
 
   const [gameState, setGameState] = useState(
-    [ ["bR","bN","bB","bQ","bK","bB","bN","bR"],
-      ["bP","bP","bP","bP","bP","bP","bP","bP"],
-      ["x","x","x","x","x","x","x","x"],
-      ["x","x","x","x","x","x","x","x"],
-      ["x","x","x","x","x","x","x","x"],
-      ["x","x","x","x","x","x","x","x"],
+    [ ["wR","wN","wB","wQ","wK","wB","wN","wR"],
       ["wP","wP","wP","wP","wP","wP","wP","wP"],
-      ["wR","wN","wB","wQ","wK","wB","wN","wR"] ]
+      ["x","x","x","x","x","x","x","x"],
+      ["x","x","x","x","x","x","x","x"],
+      ["x","x","x","x","x","x","x","x"],
+      ["x","x","x","x","x","x","x","x"],
+      ["bP","bP","bP","bP","bP","bP","bP","bP"],
+      ["bR","bN","bB","bQ","bK","bB","bN","bR"] ]
   );
 
   const togglePerspective = () => {
+    setGameState(gameState.map(row=>row.reverse()).reverse());
     if (perspective == "white") {
       setPerspective("black");
     } else {
       setPerspective("white");
     }
+    console.log("Switched!");
   };
 
   return (
@@ -30,6 +32,7 @@ export default function ChessboardAbs() {
       <p> Hello world! </p>
 
       <button onClick={() => togglePerspective()} >Switch Side</button>
+      <p>You are playing from {perspective} perspective</p>
       <div className="boardContainer">
 
         <BoardTiles perspective = {perspective} />
@@ -339,19 +342,10 @@ interface gameStateProps {
 }
 
 function DisplayPieces({gameState} : gameStateProps) {
-  
-  // return(
-  //   <>
-  //   <Div></>
-  //   </>
-  // )
-  
   const rowClasses = ["pieceRow1","pieceRow2","pieceRow3","pieceRow4","pieceRow5","pieceRow6","pieceRow7","pieceRow8"];
   const colClasses = ["pieceCol1","pieceCol2","pieceCol3","pieceCol4","pieceCol5","pieceCol6","pieceCol7","pieceCol8"];
   let pieceClassname = "";
-  // const colClass = "";
-  // const rowClass = "";
-  //Testing function that displays pieces in a list
+
   return (
     <>
       {gameState.map((items, index) => {
