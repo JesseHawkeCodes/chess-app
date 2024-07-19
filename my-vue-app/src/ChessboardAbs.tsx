@@ -24,7 +24,6 @@ export default function ChessboardAbs() {
     } else {
       setPerspective("white");
     }
-    console.log("Switched!");
   };
 
   return (
@@ -33,17 +32,26 @@ export default function ChessboardAbs() {
 
       <button onClick={() => togglePerspective()} >Switch Side</button>
       <p>You are playing from {perspective} perspective</p>
-      <div className="boardContainer">
+      <div id="gameBoard" className="boardContainer">
 
         <BoardTiles perspective = {perspective} />
 
         <BoardCoordinates perspective = {perspective} />
 
         <DisplayPieces gameState = {gameState}></DisplayPieces>
+
+        <InteractionLayer></InteractionLayer>
       </div>
     </>
   )
 
+}
+
+function InteractionLayer(){
+  return(
+    <>
+    </>
+  );
 }
 
 interface perspectiveProps {
@@ -373,4 +381,12 @@ function DisplayPieces({gameState} : gameStateProps) {
   );
 }
 
-// DisplaySinglePiece({column, row})
+document.getElementById("gameBoard")!.addEventListener("mousemove", (e) => {
+
+  //Get mouse position inside board and send to console
+  const rect = e.currentTarget!.getBoundingClientRect();
+  const x = e.clientX - rect.left; //x position within the element.
+  const y = e.clientY - rect.top;  //y position within the element.
+  console.log("Left? : " + x + " ; Top? : " + y + ".");
+});
+
