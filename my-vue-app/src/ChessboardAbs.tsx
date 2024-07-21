@@ -32,6 +32,7 @@ export default function ChessboardAbs() {
 
       <button onClick={() => togglePerspective()} >Switch Side</button>
       <p>You are playing from {perspective} perspective</p>
+      
       <div id="gameBoard" className="boardContainer">
 
         <BoardTiles perspective = {perspective} />
@@ -40,7 +41,7 @@ export default function ChessboardAbs() {
 
         <DisplayPieces gameState = {gameState}></DisplayPieces>
 
-        <InteractionLayer></InteractionLayer>
+        {/* <InteractionLayer></InteractionLayer> */}
       </div>
     </>
   )
@@ -381,12 +382,23 @@ function DisplayPieces({gameState} : gameStateProps) {
   );
 }
 
-document.getElementById("gameBoard")!.addEventListener("mousemove", (e) => {
+function mouseEventHandler(event: MouseEvent) {
 
   //Get mouse position inside board and send to console
-  const rect = e.currentTarget!.getBoundingClientRect();
-  const x = e.clientX - rect.left; //x position within the element.
-  const y = e.clientY - rect.top;  //y position within the element.
-  console.log("Left? : " + x + " ; Top? : " + y + ".");
-});
+  try {
+    const target = event.currentTarget! as HTMLDivElement;
+    const rect = target.getBoundingClientRect();
+    const x = event.clientX - rect.left; //x position within the element.
+    const y = event.clientY - rect.top;  //y position within the element.
+    console.log("Left? : " + x + " ; Top? : " + y + ".");
+  
+  } catch (e) {
+    console.log(e);
+  }
+
+}
+
+window.onload=function(){
+  document.getElementById("gameBoard")?.addEventListener("click", mouseEventHandler);
+}
 
