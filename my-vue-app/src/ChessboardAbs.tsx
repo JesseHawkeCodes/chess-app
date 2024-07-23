@@ -4,10 +4,7 @@ import './ChessboardAbs.css'
 
 export default function ChessboardAbs() {
 
-
-
-
-  // Game State
+  //////////// Game State ////////////
   const [perspective, setPerspective] = useState("white");
 
   const [gameState, setGameState] = useState(
@@ -30,104 +27,84 @@ export default function ChessboardAbs() {
     }
   };
 
+  const [inputState, setinputState] = useState({
+    isSelected: false,
+    selectedSquare: [0,0]
+  });
 
+  //////////// Highlighting Squares ////////////
+  const [selectionSquare, setSelectionSquare] = useState({id: 0, column: 0, row: 0});
 
-
-
-  // Highlighting Squares
   const [highlightedSquareList, setHighlightedSquareList] = useState<Array<HighlightedSquare>>([]);
 
-  // const updateHighlightedSquares = useCallback((action: string, id: number, object: HighlightedSquare) => {
-  //   const temp = highlightedSquareList;
-  //   console.log("Adding new square");
-  //   switch(action){
-  //     case ("add"):
-  //       temp.push(object);
-  //       setHighlightedSquareList(temp); 
-  //       break;
-  //     default:
-  //   }
-  //   console.log("Added new square");
-  //   console.log(highlightedSquareList);
-  // }, [highlightedSquareList]);
-
   const updateHighlightedSquares = useCallback((action: string, id: number, object: HighlightedSquare) => {
-    // const temp = JSON.parse(JSON.stringify(highlightedSquareList));
-    // console.log("Adding new square");
-
-    console.log("List before set:");
-    console.log(highlightedSquareList);
-
     switch(action){
       case ("add"):
-        // console.log("Temp before push:");
-        // console.log(temp);
-
-        // temp.push(object);
-        
-        // console.log("Temp after push:");
-        // console.log(temp);
-
         setHighlightedSquareList([...highlightedSquareList, object]);
-        // setHighlightedSquareList([object, object, object]);
 
-        console.log("List after set:");
-        console.log(highlightedSquareList);
         break;
       default:
     }
-    // console.log("Added new square");
-    // console.log(highlightedSquareList);
   }, [highlightedSquareList]);
 
+  //////////// Move logic ////////////
 
-  // Event handler
-  // const mouseEventHandler = useCallback((event: MouseEvent) => {
-  //   // console.log("Mouse event detected");
-  //   try {
-  //     const target = event.currentTarget! as HTMLDivElement;
-  //     const rect = target.getBoundingClientRect();
-  //     const x = event.clientX - rect.left; //x position within the board
-  //     const y = event.clientY - rect.top;  //y position within the board
-  
-  //     const newSquare = {
-  //       id:8,
-  //       column: (Math.floor(x/100)),
-  //       row: (Math.floor(y/100))
-  //     }
-  
-  //     updateHighlightedSquares("add", 8, newSquare);
+  const getValidMoves = useCallback((piece: string, row: number, col: number) => {
+    switch(piece){
+      case('wP'):
+      case('bP'):
+      defualt:
+    }
 
-  //   } catch (error) {
-  //     console.log(error);
-  //   }
-  
-  // },[updateHighlightedSquares])
+  },[])
+
+  //////////// Event handling ////////////
 
   const mouseEventHandler = useCallback((event: MouseEvent) => {
-    // console.log("Mouse event detected");
     try {
       const target = event.currentTarget! as HTMLDivElement;
       const rect = target.getBoundingClientRect();
-      const x = event.clientX - rect.left; //x position within the board
-      const y = event.clientY - rect.top;  //y position within the board
-  
-      const newSquare = {
-        id:8,
-        column: (Math.floor(x/100)),
-        row: (Math.floor(y/100))
-      }
+      const x = event.clientX - rect.left;
+      const y = event.clientY - rect.top;
+      const col = Math.floor(x/100);
+      const row = 7 - (Math.floor(y/100));
+      console.log(inputState.isSelected, gameState[row][col]);
 
-      // console.log("Before addign square:");
-      // console.log(highlightedSquareList);
-      updateHighlightedSquares("add", 8, newSquare);
+      if (inputState.isSelected == false && gameState[row][col] != "x"){
+        const newSquare = {
+          id:8,
+          column: col,
+          row: row
+        }
+  
+        setinputState({
+          isSelected: true,
+          selectedSquare: [row,col]
+        })
+        setSelectionSquare({id: 1, column:col, row:row});
+        // updateHighlightedSquares("add", 8, newSquare);
+
+      } else if (inputState.isSelected == true) {
+
+          const validMoves = getValidMoves(row, col);
+
+          const piece = gameState[inputState.selectedSquare[0]][inputState.selectedSquare[1]] ;
+          const tempState = [...gameState];
+
+          tempState[row][col] = piece;
+          tempState[inputState.selectedSquare[0]][inputState.selectedSquare[1]] = "x";
+          console.log(tempState);
+          setGameState(tempState);
+          setinputState({isSelected: false, selectedSquare: [0,0]});
+      }
 
     } catch (error) {
       console.log(error);
     }
   
-  },[updateHighlightedSquares])
+  },[gameState, inputState]); //updateHighlightedSquares])
 
+  // Add listeners here
   useEffect(() => {
 
     document.getElementById("gameBoard")?.addEventListener('click', mouseEventHandler);
@@ -139,11 +116,16 @@ export default function ChessboardAbs() {
   }, [mouseEventHandler]);
 
 
-  useEffect(() => {
-    console.log("HS Squre changedd!");
-    console.log(highlightedSquareList);
-  }, [highlightedSquareList])
+  //////////// Testing ////////////
 
+  // useEffect(() => {
+  //   console.log("HS Squre changedd!");
+  //   console.log(highlightedSquareList);
+  // }, [highlightedSquareList])
+
+
+
+  //////////// Rendering ////////////
   return (
     <>
       <p> Hello world! </p>
@@ -155,7 +137,9 @@ export default function ChessboardAbs() {
 
         <BoardTiles perspective = {perspective} />
 
-        <HighlightedTiles HighlightedSquares = {highlightedSquareList}/>
+        {/* <HighlightedTiles HighlightedSquares = {highlightedSquareList}/> */}
+
+        <SelectionSquare square = {selectionSquare} selected = {inputState.isSelected}></SelectionSquare>
 
         <BoardCoordinates perspective = {perspective}/>
 
@@ -357,22 +341,34 @@ function HighlightedTiles({HighlightedSquares} : HighlightedSquaresProps) {
   const rowClasses = ["highlightRow1","highlightRow2","highlightRow3","highlightRow4","highlightRow5","highlightRow6","highlightRow7","highlightRow8"];
   const colClasses = ["highlightCol1","highlightCol2","highlightCol3","highlightCol4","highlightCol5","highlightCol6","highlightCol7","highlightCol8"];
   let highlightClassname = "";
-  console.log("Rendering Highlights");
-  console.log(HighlightedSquares);
-  HighlightedSquares
   
   return (
     <>
       {HighlightedSquares.map((item) => {
-        highlightClassname = "highlightedSquare" + " " + rowClasses[7 - item.row] + " " + colClasses[item.column];
-        // console.log("Creating highlight");
-        // console.log(item);
+        highlightClassname = "highlightedSquare" + " " + rowClasses[item.row] + " " + colClasses[item.column];
+
         return (
           <div className={highlightClassname}/>
         )
       })}
     </>
   );
+}
+
+interface SelectionSquareProps {
+  square: HighlightedSquare;
+  selected: boolean;
+}
+
+function SelectionSquare({square, selected} : SelectionSquareProps) {
+  const rowClasses = ["highlightRow1","highlightRow2","highlightRow3","highlightRow4","highlightRow5","highlightRow6","highlightRow7","highlightRow8"];
+  const colClasses = ["highlightCol1","highlightCol2","highlightCol3","highlightCol4","highlightCol5","highlightCol6","highlightCol7","highlightCol8"];
+  const squareClassname = "highlightedSquare" + " " + rowClasses[square.row] + " " + colClasses[square.column];
+
+
+  if(selected) {
+    return(<div className={squareClassname}/>);
+  }
 }
 
 function BoardCoordinates({perspective} : perspectiveProps) {
