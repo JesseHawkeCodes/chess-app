@@ -10,7 +10,7 @@
     --offset: 100px;
 
     /* Board Positions */
-    --piece-row-1: 50px;
+    --highlight-row-1: 50px;
     --piece-row-2: 150px;
 
     --piece-col-1: 50px;
@@ -196,7 +196,7 @@
     font-family: sans-serif;
     font-weight: bold;
 
-    color: red;
+    color: rgba(23, 131, 104, 0.863);
 }
 
 .pieceCol1 {
@@ -265,6 +265,82 @@
 
 /*#endregion*/
 
+/*Highlighted Tiles*/
+/*#region*/
+
+.highlightedSquare {
+    width: 100px;
+    height: 100px;
+    display: flex;
+    position: absolute;
+
+    background-color: red;
+}
+
+.highlightCol1 {
+    left: 0px
+}
+
+.highlightCol2 {
+    left: calc(var(--offset)*1)
+}
+
+.highlightCol3 {
+    left: calc(var(--offset)*2)
+}
+
+.highlightCol4 {
+    left: calc(var(--offset)*3)
+}
+
+.highlightCol5 {
+    left: calc(var(--offset)*4)
+}
+
+.highlightCol6 {
+    left: calc(var(--offset)*5)
+}
+
+.highlightCol7 {
+    left: calc(var(--offset)*6)
+}
+
+.highlightCol8 {
+    left: calc(var(--offset)*7)
+}
+
+.highlightRow1 {
+    bottom: 0px;
+}
+
+.highlightRow2 {
+    bottom: calc(var(--offset)*1)
+}
+
+.highlightRow3 {
+    bottom: calc(var(--offset)*2)
+}
+
+.highlightRow4 {
+    bottom: calc(var(--offset)*3)
+}
+
+.highlightRow5 {
+    bottom: calc(var(--offset)*4)
+}
+
+.highlightRow6 {
+    bottom: calc(var(--offset)*5)
+}
+
+.highlightRow7 {
+    bottom: calc(var(--offset)*6)
+}
+
+.highlightRow8 {
+    bottom: calc(var(--offset)*7)
+}
+/*#endregion*/
 
 .redBG {
     background-color: red;
